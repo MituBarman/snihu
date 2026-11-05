@@ -1,0 +1,168 @@
+* { box-sizing: border-box; }
+    :root {
+      --pink: #f4a5bf;
+      --pink-deep: #e987a8;
+      --ink: #472d38;
+      --muted: #a36f81;
+    }
+    h1{
+        color: var(--pink);
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px 16px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(255,255,255,.9), transparent 28%),
+        radial-gradient(circle at 85% 85%, rgba(255,255,255,.65), transparent 30%),
+        linear-gradient(135deg, #ffe9ee, #fbd1dd 55%, #ffe8ec);
+    }
+    .calculator {
+      width: min(100%, 370px);
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 34px;
+      background: rgba(255, 249, 251, .78);
+      box-shadow: 0 22px 55px rgba(139, 79, 101, .18);
+      backdrop-filter: blur(12px);
+    }
+    .display {
+      padding: 18px 20px 16px;
+      border-radius: 25px;
+      border: 1px solid #f6c3d2;
+      background: linear-gradient(145deg, #fff4f7, #ffdce7);
+      box-shadow: inset 0 2px 7px rgba(180, 105, 131, .08);
+    }
+    .display-label, .section-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: .45px;
+      text-transform: uppercase;
+    }
+    .amount {
+      min-height: 58px;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      overflow-wrap: anywhere;
+      text-align: right;
+      font-size: clamp(2.3rem, 12vw, 3.1rem);
+      font-weight: 500;
+      letter-spacing: -2px;
+      font-variant-numeric: tabular-nums;
+    }
+    .discount-panel {
+      margin: 14px 2px;
+      padding: 13px 12px;
+      border-radius: 19px;
+      background: rgba(255,255,255,.68);
+      border: 1px solid #f7d0dc;
+    }
+    .section-label { margin: 0 0 11px; }
+    .rates {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+    }
+    button {
+      border: 0;
+      font: inherit;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
+    }
+    button:active { transform: scale(.94); }
+    .rate {
+      padding: 9px 3px;
+      border-radius: 12px;
+      color: #76515f;
+      background: #ffeaf0;
+      border: 1px solid #f6d1dc;
+      font-size: 12px;
+      font-weight: 650;
+    }
+    .rate.active {
+      color: white;
+      background: var(--pink);
+      border-color: var(--pink);
+      box-shadow: 0 5px 12px rgba(208, 104, 139, .2);
+    }
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      padding: 1px 2px 14px;
+    }
+    .key {
+      min-height: 54px;
+      border-radius: 18px;
+      color: #513b44;
+      background: #fffdfd;
+      border: 1px solid #f0e0e5;
+      box-shadow: 0 3px 8px rgba(129, 80, 98, .08);
+      font-size: 19px;
+      font-weight: 550;
+    }
+    .key.utility {
+      color: white;
+      background: var(--pink);
+      border-color: transparent;
+      font-size: 15px;
+    }
+    .results {
+      padding: 13px 16px 15px;
+      border-radius: 22px;
+      background: #fffdfd;
+      border: 1px solid #f3dce4;
+    }
+    .result-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 7px 0;
+      color: #936b7a;
+      font-size: 13px;
+    }
+    .result-row strong {
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 650;
+      font-variant-numeric: tabular-nums;
+    }
+    .result-row.savings strong { color: #d66f94; }
+    .divider { height: 1px; margin: 4px 0; background: #f3e2e8; }
+    .final-price {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 9px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .final-price strong {
+      color: #d66f94;
+      font-size: 24px;
+      letter-spacing: -.6px;
+      font-variant-numeric: tabular-nums;
+    }
+    .hint {
+      margin: 13px 0 1px;
+      text-align: center;
+      color: #a77c8a;
+      font-size: 10px;
+      letter-spacing: .5px;
+    }
+    @media (max-width: 380px) {
+      .calculator { padding: 12px; border-radius: 28px; }
+      .rates { gap: 5px; }
+      .rate { font-size: 11px; }
+      .key { min-height: 50px; }
+    }

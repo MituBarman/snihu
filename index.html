@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discount Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="calculator" aria-label="Discount calculator">
+  <center>
+      <h1 >Discount Calculator</h1>
+      
+
+  </center>
+    <section class="display" aria-live="polite">
+      <div class="display-label">Enter amount (₹)</div>
+      <div class="amount" id="amount">0</div>
+    </section>
+
+    <section class="discount-panel">
+      <p class="section-label">Select discount rate</p>
+      <div class="rates" id="rates" role="group" aria-label="Discount rate">
+        <button class="rate" data-rate="5">5%</button>
+        <button class="rate" data-rate="10">10%</button>
+        <button class="rate" data-rate="15">15%</button>
+        <button class="rate" data-rate="20">20%</button>
+
+      </div>
+    </section>
+
+    <section class="keypad" id="keypad" aria-label="Number keypad">
+      <button class="key" data-digit="7">7</button>
+      <button class="key" data-digit="8">8</button>
+      <button class="key" data-digit="9">9</button>
+      <button class="key" data-digit="4">4</button>
+      <button class="key" data-digit="5">5</button>
+      <button class="key" data-digit="6">6</button>
+      <button class="key" data-digit="1">1</button>
+      <button class="key" data-digit="2">2</button>
+      <button class="key" data-digit="3">3</button>
+      <button class="key zero" data-digit="0">0</button>
+      <button class="key" data-action="decimal">.</button>
+      <button class="key utility" data-action="backspace">⌫</button>
+      <button class="key utility" data-action="clear" style="grid-column: span 3;">CLEAR</button>
+    </section>
+
+    <section class="results" aria-live="polite">
+      <div class="result-row">
+        <span>Original price</span>
+        <strong id="original">₹0.00</strong>
+      </div>
+      <div class="result-row savings">
+        <span>Discount amount</span>
+        <strong id="saving">−₹0.00</strong>
+      </div>
+      <div class="divider"></div>
+      <div class="final-price">
+        <span>Price after discount</span>
+        <strong id="final">₹0.00</strong>
+      </div>
+    </section>
+    <p class="hint">Made with love ❤️</p>
+  </main>
+
+  <script>
+    const amountEl = document.getElementById("amount");
+    const originalEl = document.getElementById("original");
+    const savingEl = document.getElementById("saving");
+    const finalEl = document.getElementById("final");
+    const currency = new Intl.NumberFormat("en-IN", {
+      style: "currency", currency: "INR",
+      minimumFractionDigits: 2, maximumFractionDigits: 2
+    });
+
+    let amount = "0";
+    let selectedRate = null;
+
+    function render() {
+      amountEl.textContent = amount;
+      const value = Number(amount);
+      const discount = selectedRate === null ? 0 : value * selectedRate / 100;
+      originalEl.textContent = currency.format(value);
+      savingEl.textContent = "−" + currency.format(discount);
+      finalEl.textContent = currency.format(value - discount);
+    }
+
+    document.getElementById("keypad").addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+
+      if (button.dataset.digit !== undefined) {
+        amount = amount === "0" ? button.dataset.digit : amount + button.dataset.digit;
+      } else if (button.dataset.action === "decimal") {
+        if (!amount.includes(".")) amount += ".";
+      } else if (button.dataset.action === "backspace") {
+        amount = amount.length > 1 ? amount.slice(0, -1) : "0";
+        if (amount === "-") amount = "0";
+      } else if (button.dataset.action === "clear") {
+        amount = "0";
+      }
+      render();
+    });
+
+    document.getElementById("rates").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-rate]");
+      if (!button) return;
+
+      selectedRate = Number(button.dataset.rate);
+      document.querySelectorAll(".rate").forEach(rateButton => {
+        const active = rateButton === button;
+        rateButton.classList.toggle("active", active);
+        rateButton.setAttribute("aria-pressed", String(active));
+      });
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
